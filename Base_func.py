@@ -92,7 +92,7 @@ def window_capture():
     #img = cv.imread(filename)
     #截取出ios屏幕区域
     cropped = img[37:height-1, 1:width-1]  # 裁剪坐标为[y0:y1, x0:x1]
-    cv.imwrite('Template/test.jpg', cropped)
+    cv.imwrite('test.jpg', cropped)
     win32gui.DeleteObject(saveBitMap.GetHandle()) #释放内存
     saveDC.DeleteDC()
     mfcDC.DeleteDC()
