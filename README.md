@@ -5,3 +5,5 @@ This is the V2.0 ver game assitant for Fate Grand Order (iOS &amp; Android both 
 ### Important：
 This is a refactor project from [McLaren12345/FGO_Bluetooth_Assist](https://github.com/McLaren12345/FGO_Bluetooth_Assistant)
 The project is working on refactor the architecture and design. 
+
+
