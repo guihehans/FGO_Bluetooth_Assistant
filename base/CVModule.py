@@ -5,7 +5,12 @@ import sys
 
 
 def window_capture():
-    hwnd = win32gui.FindWindow("CHWindow", None)  # 窗口
+    """
+    capture the window image from iphone sent through Airplayer.
+
+    :return:
+    """
+    hwnd = win32gui.FindWindow("CHWindow", None)  # get window handler. the window Handler name is CHWindow
     # 根据窗口句柄获取窗口的设备上下文DC（Device Context）
     hwndDC = win32gui.GetWindowDC(hwnd)
     # 获取句柄窗口的大小信息

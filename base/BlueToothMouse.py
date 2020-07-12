@@ -31,7 +31,7 @@ class BlueToothMouse:
         self.serial.bytesize = 8  # set bytesize
         self.serial.stopbits = 1  # set stopbits
         self.serial.parity = "N"  # set parity
-        # default device model is 6splus. the x y range is
+        # default device model is 6s plus. the x y range is
         # 1334,750
         self.x_range, self.y_range = read_config(config)
         time.sleep(0.3)
@@ -53,18 +53,23 @@ class BlueToothMouse:
         else:
             print("serial close success")
 
-    """
-    :returns set the mouse button to 0,0 point. by default the mouse is located 
-    in the center (1334/2,750/2)
-    """
-
     def set_zero(self):
+        """
+        set the mouse button to 0,0 point. by default the mouse is located
+        in the center (width/2,height/2)
+        :returns set the mouse button to 0,0 point. by default the mouse is located
+        in the center (width/2,height/2)
+        """
         for i in range(12):
             self.serial.write(serial.to_bytes([0x08, 0x00, 0xA1, 0x02, 0, 128, 128, 0]))
         self.x_pre = 0
         self.y_pre = 0
 
     def click(self):
+        """
+        send mouse button 1 clicked and release command to simulate click operation
+        :return:
+        """
         self.serial.write(serial.to_bytes([0x08, 0x00, 0xA1, 0x02, 1, 0, 0, 0]))
         self.serial.write(serial.to_bytes([0x08, 0x00, 0xA1, 0x02, 0, 0, 0, 0]))
         time.sleep(0.3)
@@ -141,7 +146,7 @@ if __name__ == '__main__':
     time.sleep(0.5)
     mouse.touch(606, 606)
     time.sleep(0.5)
-    mouse.touch(606+200, 606+327,2)
+    mouse.touch(606 + 200, 606 + 327, 2)
     time.sleep(1)
-    mouse.touch(606+180,606+500,8)
+    mouse.touch(606 + 180, 606 + 500, 8)
     mouse.close()
