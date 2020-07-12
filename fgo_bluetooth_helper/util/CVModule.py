@@ -2,7 +2,7 @@ import cv2 as cv
 import numpy as np
 import win32gui, win32ui, win32con, win32api
 import sys
-from fgo_bluetooth_helper.util import config_6s
+from fgo_bluetooth_helper.util import config_6s, BlueToothMouse
 
 output_dir = config_6s.output_dir
 
@@ -97,5 +97,11 @@ def match_template(filename, show_switch=False, threshold=0.85):
 
 
 if __name__ == '__main__':
-    result = match_template("drag_bar", show_switch=False)
-    print(result)
+    found, location = match_template("Attack_button", show_switch=False)
+
+    print(found, location)
+    bluemouse = BlueToothMouse.BlueToothMouse(port="com3", config="6sp")
+    bluemouse.open()
+    bluemouse.set_zero()
+    bluemouse.move(location[0], location[1])
+    bluemouse.close()
