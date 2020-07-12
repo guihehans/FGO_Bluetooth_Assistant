@@ -48,18 +48,8 @@ def window_capture():
 
     return cropped
 
-def test_window():
-    print("test")
-    window_capture()
+
 class CVModule:
     pass
 
 
-if __name__ == '__main__':
-    # Load an color image in grayscale
-    # path = r'..\Template\Add_friend.jpg'
-    # img = cv.imread(path, 0)
-    # cv.imshow('image', img)
-    # cv.waitKey(0)
-    # cv.destroyAllWindows()
-    test_window()

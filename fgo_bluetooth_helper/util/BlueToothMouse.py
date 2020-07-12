@@ -1,14 +1,17 @@
 import serial
-import time
 from serial.serialutil import *
 
-"""
-"""
+from fgo_bluetooth_helper.util import config_6s
 
 
 def read_config(config):
+    """
+    read config file by device type.
+
+    :param config: device type.currently only 6sp supported
+    :return:
+    """
     if config == "6sp":
-        import base.config_6s as config_6s
         return config_6s.x_range, config_6s.y_range
 
 
@@ -37,21 +40,27 @@ class BlueToothMouse:
         time.sleep(0.3)
 
     def open(self):
-        if self.serial.isOpen():
-            print("serial is already open.")
-        else:
-            self.serial.open()  # 打开串口,要找到对的串口号才会成功
-            if self.serial.isOpen():
-                print("serial open success")
+        try:
+            if self.get_is_open():
+                print("serial is already open.")
             else:
-                print("serial cannot open")
+                self.serial.open()  # 打开串口,要找到对的串口号才会成功
+                if self.get_is_open():
+                    print("serial open success")
+                else:
+                    print("serial cannot open")
+        finally:
+            return self.get_is_open()
 
     def close(self):
         self.serial.close()
-        if self.serial.isOpen():
+        if self.get_is_open():
             print("serial close failed")
         else:
             print("serial close success")
+
+    def get_is_open(self):
+        return self.serial.isOpen()
 
     def set_zero(self):
         """

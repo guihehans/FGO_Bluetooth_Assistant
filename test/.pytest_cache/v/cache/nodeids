@@ -1,3 +1,4 @@
 [
-  "FGO_TEST.py::MyTestCase::test_something"
+  "base_window_capture_test.py::MyTestCase::test_friendship_summon",
+  "base_window_capture_test.py::MyTestCase::test_mouse_open"
 ]
