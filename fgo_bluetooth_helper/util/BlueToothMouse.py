@@ -69,6 +69,7 @@ class BlueToothMouse:
         :returns set the mouse button to 0,0 point. by default the mouse is located
         in the center (width/2,height/2)
         """
+        # repeat move cursor toward zero point
         for i in range(12):
             self.serial.write(serial.to_bytes([0x08, 0x00, 0xA1, 0x02, 0, 128, 128, 0]))
         self.x_pre = 0
@@ -146,16 +147,19 @@ class BlueToothMouse:
         else:
             print("发送失败，串口未打开")
 
+    def drag(self, x, y):
+        if self.serial.isOpen():
+            self.move(x, y, key=1)
+        else:
+            print("发送失败，串口未打开")
+
 
 if __name__ == '__main__':
     mouse = BlueToothMouse(port="com3")
     mouse.open()
     time.sleep(0.5)
     mouse.set_zero()
+    mouse.touch(1240-60, 219+100)
     time.sleep(0.5)
-    mouse.touch(606, 606)
-    time.sleep(0.5)
-    mouse.touch(606 + 200, 606 + 327, 2)
-    time.sleep(1)
-    mouse.touch(606 + 180, 606 + 500, 8)
+    mouse.drag(1240-60,219+300)
     mouse.close()
