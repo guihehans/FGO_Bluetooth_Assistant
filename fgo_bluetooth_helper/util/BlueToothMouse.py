@@ -159,7 +159,6 @@ if __name__ == '__main__':
     mouse.open()
     time.sleep(0.5)
     mouse.set_zero()
-    mouse.touch(1240-60, 219+100)
+    mouse.move(1000, 1100)
     time.sleep(0.5)
-    mouse.drag(1240-60,219+300)
     mouse.close()

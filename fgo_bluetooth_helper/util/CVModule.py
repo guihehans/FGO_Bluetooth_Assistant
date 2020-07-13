@@ -97,11 +97,11 @@ def match_template(filename, show_switch=False, threshold=0.85):
 
 
 if __name__ == '__main__':
-    found, location = match_template("Attack_button", show_switch=False)
-
+    found, location = match_template("LastOrder_sign", show_switch=False)
     print(found, location)
     bluemouse = BlueToothMouse.BlueToothMouse(port="com3", config="6sp")
     bluemouse.open()
     bluemouse.set_zero()
-    bluemouse.move(location[0], location[1])
+    if location != 0:
+        bluemouse.touch(1000, 1100)
     bluemouse.close()

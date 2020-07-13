@@ -24,16 +24,18 @@ class State:
 
         :return: True if in battle, False if not.
         """
-        retry = 20
+        retry = 60
         found, location = CVModule.match_template('Attack_button')
         while retry > 0 and not found:
             time.sleep(1)
             found, location = CVModule.match_template('Attack_button')
             retry = retry - 1
+        if not found:
+            print("ERROR: can not check if in ready to act status.")
         return found
 
 
-def enter_general_battle_procedure(mouse_instance, servant, servant_class):
+def enter_general_battle_procedure(mouse_instance, servant, servant_class, battle_script):
     """
     enter the general battle procedure.
 
@@ -56,10 +58,20 @@ def enter_general_battle_procedure(mouse_instance, servant, servant_class):
     :param mouse_instance:
     :param servant:
     :param servant_class:
+    :param battle_script:
     :return:
     """
-    assist_select(mouse_instance, servant, servant_class)
-    enter_battle(mouse_instance, battle_script="CBA_3T")
+    if mouse_instance.get_is_open():
+        print("Enter enter_general_battle_procedure with servant:[{}],servant class:[{}],battle_script:[{}]".format(
+            servant,
+            servant_class,
+            battle_script))
+        # select assist servant
+        assist_select(mouse_instance, servant, servant_class)
+        # enter battle and act as setting battle script
+        enter_battle(mouse_instance, battle_script=battle_script)
+    else:
+        print("mouse not open!")
 
 
 def assist_select(mouse_instance, servant, servant_class):
@@ -103,33 +115,35 @@ def enter_battle(mouse_instance, battle_script="CBA_3T"):
     # 等待战斗开始
     time.sleep(10)
     # 判断是否进入战斗界面
-    if State.is_ready_to_act():
-        time.sleep(3)                   #等待6秒，因为礼装效果掉落暴击星会耗时
-        # Turn1
-        character_skill(mouse_instance=mouse_instance, character_number=2, skill_number=2)
-        character_skill(mouse_instance=mouse_instance, character_number=2, skill_number=3)
-        character_skill(mouse_instance=mouse_instance, character_number=3, skill_number=1, skill_target=1)
-        act_and_use_ultimate_skill(mouse_instance=mouse_instance, ultimate_skill=1)
+    State.is_ready_to_act()
+    time.sleep(3)  # 等待6秒，因为礼装效果掉落暴击星会耗时
+    # Turn 1
+    character_skill(mouse_instance=mouse_instance, character_number=2, skill_number=2)
+    character_skill(mouse_instance=mouse_instance, character_number=2, skill_number=3)
+    character_skill(mouse_instance=mouse_instance, character_number=3, skill_number=1, skill_target=1)
+    act_and_use_ultimate_skill(mouse_instance=mouse_instance, ultimate_skill=1)
 
-        # # Serial.mouse_set_zero()         #鼠标复位,防止误差累积
-        time.sleep(10)  # 等待战斗动画播放完成
-        State.is_ready_to_act()
-        # Turn2
-        character_skill(mouse_instance=mouse_instance, character_number=3, skill_number=3, skill_target=1)
-        character_skill(mouse_instance=mouse_instance, character_number=2, skill_number=1, skill_target=1)
-        character_skill(mouse_instance=mouse_instance, character_number=1, skill_number=3)
-        use_master_skill(mouse_instance=mouse_instance, skill_number=3, swap_target_1=2, swap_target_2=4)
-        character_skill(mouse_instance=mouse_instance, character_number=2, skill_number=1, skill_target=1)
-        act_and_use_ultimate_skill(mouse_instance=mouse_instance, ultimate_skill=1)
+    # 鼠标复位,防止误差累积
+    mouse_instance.set_zero()
+    State.is_ready_to_act()
+    # Turn 2
+    character_skill(mouse_instance=mouse_instance, character_number=3, skill_number=3, skill_target=1)
+    character_skill(mouse_instance=mouse_instance, character_number=2, skill_number=1, skill_target=1)
+    character_skill(mouse_instance=mouse_instance, character_number=1, skill_number=3)
+    cast_master_skill(mouse_instance=mouse_instance, skill_number=3, swap_target_1=2, swap_target_2=4)
+    character_skill(mouse_instance=mouse_instance, character_number=2, skill_number=1, skill_target=1)
+    act_and_use_ultimate_skill(mouse_instance=mouse_instance, ultimate_skill=1)
 
-        # # Serial.mouse_set_zero()         #鼠标复位,防止误差累积
-        time.sleep(10)  # 等待战斗动画播放完成
-        State.is_ready_to_act()
-        # Turn3
-        character_skill(mouse_instance=mouse_instance, character_number=2, skill_number=3, skill_target=1)
-        character_skill(mouse_instance=mouse_instance, character_number=2, skill_number=2)
-        character_skill(mouse_instance=mouse_instance, character_number=3, skill_number=2)
-        act_and_use_ultimate_skill(mouse_instance=mouse_instance, ultimate_skill=1)
+    # 鼠标复位,防止误差累积
+    mouse_instance.set_zero()
+    State.is_ready_to_act()
+    # Turn3
+    character_skill(mouse_instance=mouse_instance, character_number=2, skill_number=3, skill_target=1)
+    character_skill(mouse_instance=mouse_instance, character_number=2, skill_number=2)
+    character_skill(mouse_instance=mouse_instance, character_number=3, skill_number=2)
+    act_and_use_ultimate_skill(mouse_instance=mouse_instance, ultimate_skill=1)
+    # quit battle
+    quit_battle(mouse_instance)
 
 
 def select_assist_servant_class(mouse_instance, servant_class: str):
@@ -140,14 +154,17 @@ def select_assist_servant_class(mouse_instance, servant_class: str):
     :param servant_class: the class of given servant.
     :return: touch the servant_class button
     """
+    print("Start select servant_class [{}]".format(servant_class))
     found, location = CVModule.match_template(servant_class)
     if not found:
         # try to match the selected version template
         found, location = CVModule.match_template(servant_class + "_selected")
     if found:
         mouse_instance.touch(location[0] - 20, location[1] + 65, 2)
+        print("Complete select servant_class [{}]".format(servant_class))
         return True
     else:
+        print("Can not select servant_class [{}]".format(servant_class))
         return False
 
 
@@ -166,7 +183,7 @@ def select_assist_servant(mouse_instance, servant, retry_times):
         found, location, drag_times = drag_and_find_servant(mouse_instance, servant, drag_times)
     if found:
         # select the servant
-        mouse_instance.touch(location[0] - 20, location[1]+250)
+        mouse_instance.touch(location[0] - 20, location[1] + 250)
         return True, retry_times
     else:
         # refresh the assist servant
@@ -270,8 +287,18 @@ def act_and_use_ultimate_skill(mouse_instance, ultimate_skill=1):
     print("act and use ultimate_skill {}".format(ultimate_skill))
 
 
-def use_master_skill(mouse_instance, skill_number, swap_target_1, swap_target_2):
+def cast_master_skill(mouse_instance, skill_number, swap_target_1, swap_target_2):
+    """
+    use master skill. swap target if the skill_number=3,which is "swap team member"
+
+    :param mouse_instance:
+    :param skill_number:
+    :param swap_target_1:
+    :param swap_target_2:
+    :return:
+    """
     # 御主技能按键
+    print('Ready to cast Master skill {}.'.format(skill_number))
     mouse_instance.touch(1130, 525, 1)
     time.sleep(1)
     if skill_number == 1:
@@ -283,7 +310,7 @@ def use_master_skill(mouse_instance, skill_number, swap_target_1, swap_target_2)
         # select swap_target_1
         mouse_instance.set_zero()
         mouse_instance.touch(110 + (swap_target_1 - 1) * 200, 600)
-        time.sleep(1)
+        time.sleep(0.5)
         # select swap_target_2
         mouse_instance.set_zero()
         mouse_instance.touch(110 + (swap_target_2 - 1) * 200, 600)
@@ -291,42 +318,38 @@ def use_master_skill(mouse_instance, skill_number, swap_target_1, swap_target_2)
         mouse_instance.touch(620, 1050)
     time.sleep(1)
     State.is_ready_to_act()
-    print('Master skill {} is pressed'.format(skill_number))
-    time.sleep(1)
+    print('Complete casting Master skill {}.'.format(skill_number))
+    time.sleep(0.5)
 
 
 def quit_battle(mouse_instance):
-    time.sleep(15)
-    while True:
-        time.sleep(1)
-        found, position = CVModule.match_template('Battlefinish_sign')
-        if found:
-            break
-        found, position = CVModule.match_template('Attack_button')
-        if found:
-            break
-    found, position = CVModule.match_template('Attack_button')
-    if found:
-        print(' 翻车，需要人工处理')  # 翻车检测
-        mouse_instance.set_zero()
-        sys.exit(0)
-    print('Battle finished')
-    time.sleep(1)
-    # found, position = CVModule.match_template('Rainbow_box')  # 检测是否掉礼装，若掉落则短信提醒
-    mouse_instance.touch(986, 565, 6)
-    mouse_instance.touch(285, 525, 2)  # 拒绝好友申请
-    mouse_instance.set_zero()  # 鼠标复位,防止误差累积
-    print('Quit success')
     time.sleep(5)
+    battle_finish, still_in_battle = False, False
+    while not battle_finish and not still_in_battle:
+        time.sleep(1)
+        battle_finish, position_1 = CVModule.match_template('Battle_finish_sign3')
+        still_in_battle, position_2 = CVModule.match_template('Attack_button')
+    if still_in_battle:
+        print("ERROR: Can not finish battle as scripted, exist program now.")  # 翻车检测
+        return False
+    if battle_finish:
+        print("Battle finished.")
+        time.sleep(1)
+        retry = 20
+        is_battle_exited = False
+        while (not is_battle_exited) and retry > 0:
+            is_battle_exited, location = CVModule.match_template("LastOrder_sign", show_switch=False)
+            mouse_instance.touch(1000, 1100, 2)
+            time.sleep(1)
+            retry = retry - 1
+
+        print('Quit success')
+        return True
 
 
 if __name__ == '__main__':
     bluemouse = BlueToothMouse.BlueToothMouse(port="com3", config="6sp")
     bluemouse.open()
     bluemouse.set_zero()
-    enter_general_battle_procedure(bluemouse, servant="CBA", servant_class="Caster")
-    # enter_battle(bluemouse, battle_script="CBA_3T")
-    # act_and_use_ultimate_skill(bluemouse, 1)
-    # use_master_skill(bluemouse, 3, 2, 4)
-    # quit_battle(mouse_instance=bluemouse)
+    enter_general_battle_procedure(bluemouse, servant="CBA", servant_class="Caster", battle_script="CBA_3T")
     bluemouse.close()
