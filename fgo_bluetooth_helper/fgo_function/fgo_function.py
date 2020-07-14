@@ -15,7 +15,6 @@ def friendship_point_summon(port="com3", device_type="6sp"):
     mouse.open()
     mouse.set_zero()
 
-    mouse.touch(config_6s.x_center, config_6s.y_center)
     time.sleep(1)
     flag = True
     while flag:

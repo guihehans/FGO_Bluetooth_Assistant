@@ -67,14 +67,14 @@ def enter_general_battle_procedure(mouse_instance, servant, servant_class, battl
             servant_class,
             battle_script))
         # select assist servant
-        assist_select(mouse_instance, servant, servant_class)
+        assist_select(mouse_instance, servant, servant_class, battle_script)
         # enter battle and act as setting battle script
         enter_battle(mouse_instance, battle_script=battle_script)
     else:
         print("mouse not open!")
 
 
-def assist_select(mouse_instance, servant, servant_class):
+def assist_select(mouse_instance, servant, servant_class, battle_script):
     """
     select the assist servant.
     the process is :
@@ -97,6 +97,7 @@ def assist_select(mouse_instance, servant, servant_class):
         servant_found, retry_times = select_assist_servant(mouse_instance, servant, retry_times)
     if servant_found:
         print("servant [{}] found.".format(servant))
+        select_team(mouse_instance, battle_script=battle_script)
         start_battle(mouse_instance)
     else:
         print("cannot find servant {} in given retry_times".format(servant))
@@ -113,7 +114,6 @@ def enter_battle(mouse_instance, battle_script="CBA_3T"):
     # 鼠标复位,防止误差累积
     mouse_instance.set_zero()
     # 等待战斗开始
-    time.sleep(10)
     # 判断是否进入战斗界面
     State.is_ready_to_act()
     time.sleep(3)  # 等待6秒，因为礼装效果掉落暴击星会耗时
@@ -228,6 +228,17 @@ def refresh_servant(mouse_instance):
         time.sleep(1)
     else:
         print("cannot refresh the assist servant!")
+
+
+def select_team(mouse_instance, battle_script):
+    """
+    select team according to battle script setting
+
+    :param mouse_instance:
+    :param battle_script:
+    :return:
+    """
+    pass
 
 
 def start_battle(mouse_instance):
