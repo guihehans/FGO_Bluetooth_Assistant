@@ -1,38 +1,10 @@
 import random
 import sys
 
+from fgo_bluetooth_helper.fgo_function.State_Check import State
 from fgo_bluetooth_helper.util import BlueToothMouse, CVModule
 import time
 from fgo_bluetooth_helper.util import config_6s
-
-
-class State:
-    @staticmethod
-    def is_return_to_menu():
-        found, location = CVModule.match_template('Return_button')
-        return found
-
-    @staticmethod
-    def is_in_friend_menu():
-        found, location = CVModule.match_template('friend_sign')
-        return found
-
-    @staticmethod
-    def is_ready_to_act():
-        """
-        check if in battle state
-
-        :return: True if in battle, False if not.
-        """
-        retry = 60
-        found, location = CVModule.match_template('Attack_button')
-        while retry > 0 and not found:
-            time.sleep(1)
-            found, location = CVModule.match_template('Attack_button')
-            retry = retry - 1
-        if not found:
-            print("ERROR: can not check if in ready to act status.")
-        return found
 
 
 def enter_general_battle_procedure(mouse_instance, servant, servant_class, battle_script):

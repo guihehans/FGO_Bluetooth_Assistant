@@ -135,7 +135,7 @@ class BlueToothMouse:
 
         for i in range(len(X)):
             self.serial.write(serial.to_bytes([0x08, 0x00, 0xA1, 0x02, key, X[i], Y[i], 0]))
-        time.sleep(0.3)
+        time.sleep(0.15)
         self.x_pre = x
         self.y_pre = y
 
@@ -157,8 +157,7 @@ class BlueToothMouse:
 if __name__ == '__main__':
     mouse = BlueToothMouse(port="com3")
     mouse.open()
-    time.sleep(0.5)
     mouse.set_zero()
-    mouse.move(1000, 1100)
+    mouse.move(800, 1000)
     time.sleep(0.5)
     mouse.close()
