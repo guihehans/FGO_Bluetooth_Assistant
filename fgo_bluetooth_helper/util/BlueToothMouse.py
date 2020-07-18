@@ -81,7 +81,6 @@ class BlueToothMouse:
         :return:
         """
         self.serial.write(serial.to_bytes([0x08, 0x00, 0xA1, 0x02, 1, 0, 0, 0]))
-        time.sleep(0.05)
         self.serial.write(serial.to_bytes([0x08, 0x00, 0xA1, 0x02, 0, 0, 0, 0]))
         time.sleep(0.3)
 
