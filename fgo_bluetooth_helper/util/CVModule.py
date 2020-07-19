@@ -97,11 +97,15 @@ def match_template(filename, show_switch=False, threshold=0.85):
 
 
 if __name__ == '__main__':
-    found, location = match_template("Caster", show_switch=False)
+    found, location = match_template("drag_bar", show_switch=False)
+    # found, location=True, (855, 129)
     print(found, location)
     bluemouse = BlueToothMouse.BlueToothMouse(port="com3", config="6sp")
     bluemouse.open()
     bluemouse.set_zero()
     if location != 0:
-        bluemouse.move(location[0]-20, location[1]+65)
+        # bluemouse.move(location[0]-55, location[1]+ 80)
+        bluemouse.touch(location[0] - 60, location[1] + 100)
+        # drag for 1 screen long
+        bluemouse.drag(location[0] - 60, location[1] + 260)
     bluemouse.close()

@@ -4,10 +4,10 @@ from fgo_bluetooth_helper.fgo_function.battle_functon import character_skill, ac
     cast_master_skill, quit_battle
 
 SERVANT_CONFIG_DATA = {
-    "servant": "CBA",
-    "servant_class": "Caster",
-    "servant_class_location_error": (-20, 65),
-    "servant_location_error": (-20, 250)
+    "servant": "Arjuna_Alter",
+    "servant_class": "Berserker",
+    "servant_class_location_error": (-33, 83),
+    "servant_location_error": (0, 200)
 }
 
 
@@ -24,9 +24,8 @@ def aoe_3t_battle_script(mouse_instance):
     time.sleep(3)  # 等待6秒，因为礼装效果掉落暴击星会耗时
     # Turn 1
     print("Turn 1")
-    character_skill(mouse_instance=mouse_instance, character_number=2, skill_number=2)
-    character_skill(mouse_instance=mouse_instance, character_number=2, skill_number=3)
-    character_skill(mouse_instance=mouse_instance, character_number=3, skill_number=1, skill_target=1)
+    character_skill(mouse_instance=mouse_instance, character_number=1, skill_number=2)
+    character_skill(mouse_instance=mouse_instance, character_number=1, skill_number=3)
     act_and_use_ultimate_skill(mouse_instance=mouse_instance, ultimate_skill=1)
 
     # 鼠标复位,防止误差累积
@@ -34,22 +33,20 @@ def aoe_3t_battle_script(mouse_instance):
     State.is_ready_to_act()
     # Turn 2
     print("Turn 2")
-    character_skill(mouse_instance=mouse_instance, character_number=3, skill_number=3, skill_target=1)
-    character_skill(mouse_instance=mouse_instance, character_number=2, skill_number=1, skill_target=1)
-    character_skill(mouse_instance=mouse_instance, character_number=1, skill_number=3)
-    cast_master_skill(mouse_instance=mouse_instance, skill_number=3, swap_target_1=2, swap_target_2=4)
-    character_skill(mouse_instance=mouse_instance, character_number=2, skill_number=1, skill_target=1)
-    act_and_use_ultimate_skill(mouse_instance=mouse_instance, ultimate_skill=1)
+    character_skill(mouse_instance=mouse_instance, character_number=2, skill_number=1)
+    character_skill(mouse_instance=mouse_instance, character_number=2, skill_number=2)
+    act_and_use_ultimate_skill(mouse_instance=mouse_instance, ultimate_skill=2)
 
     # 鼠标复位,防止误差累积
     mouse_instance.set_zero()
     State.is_ready_to_act()
     # Turn3
     print("Turn 3")
-    character_skill(mouse_instance=mouse_instance, character_number=2, skill_number=3, skill_target=1)
-    character_skill(mouse_instance=mouse_instance, character_number=2, skill_number=2)
+    character_skill(mouse_instance=mouse_instance, character_number=3, skill_number=1)
     character_skill(mouse_instance=mouse_instance, character_number=3, skill_number=2)
-    cast_master_skill(mouse_instance=mouse_instance, skill_number=1)
-    act_and_use_ultimate_skill(mouse_instance=mouse_instance, ultimate_skill=1)
+    cast_master_skill(mouse_instance=mouse_instance, skill_number=3, swap_target_1=1, swap_target_2=4)
+    character_skill(mouse_instance=mouse_instance, character_number=1, skill_number=1)
+    character_skill(mouse_instance=mouse_instance, character_number=1, skill_number=3, skill_target=3)
+    act_and_use_ultimate_skill(mouse_instance=mouse_instance, ultimate_skill=3)
     # quit battle
     quit_battle(mouse_instance)

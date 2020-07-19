@@ -1,3 +1,5 @@
+import sys
+
 from fgo_bluetooth_helper.fgo_function.script import script_register
 from fgo_bluetooth_helper.util import BlueToothMouse, CVModule
 import time
@@ -80,9 +82,11 @@ class BattleHelper(object):
             if servant_found:
                 print("servant [{}] found.".format(servant))
                 self.select_team(battle_script=battle_script)
+                time.sleep(0.5)
                 self.start_battle()
-            else:
+            elif retry_times >= max_retry:
                 print("cannot find servant {} in given retry_times".format(servant))
+                sys.exit()
 
     def enter_battle(self, battle_script="CBA_3T"):
         """
@@ -125,21 +129,22 @@ class BattleHelper(object):
         :param retry_times: the current retry time. decrease when servant still not found when drag all down.
         :return: touch and select given servant
         """
+        time.sleep(0.3)
         found, location = CVModule.match_template(servant)
         drag_times = 3
-        while not found and drag_times > 0:
+        while (not found) and (drag_times > 0):
             found, location, drag_times = self.drag_and_find_servant(servant, drag_times)
-            if found:
-                # select the servant
-                time.sleep(0.1)
-                self.mouse_instance.touch(location[0] + self.servant_location_error[0],
-                                          location[1] + self.servant_location_error[1])
-                return True, retry_times
-            else:
-                # refresh the assist servant
-                self.refresh_servant()
-                retry_times = retry_times + 1
-                return False, retry_times
+        if found:
+            # select the servant
+            time.sleep(0.1)
+            self.mouse_instance.touch(location[0] + self.servant_location_error[0],
+                                      location[1] + self.servant_location_error[1])
+            return True, retry_times
+        else:
+            # refresh the assist servant
+            self.refresh_servant()
+            retry_times = retry_times + 1
+            return False, retry_times
 
     def drag_and_find_servant(self, servant, drag_times):
         """
@@ -151,6 +156,7 @@ class BattleHelper(object):
         :return:
         """
         # find the drag bar
+        self.mouse_instance.set_zero()
         time.sleep(0.3)
         found, location = CVModule.match_template("drag_bar")
         if found:
@@ -169,10 +175,10 @@ class BattleHelper(object):
         found, location = CVModule.match_template("Refresh_friend")
         if found:
             # click refresh button
-            self.mouse_instance.touch(location[0] - 20, location[1] + 65)
+            self.mouse_instance.touch(location[0] - 55, location[1] + 80)
             time.sleep(0.5)
             # click confirm button
-            self.mouse_instance.touch(location[0] - 40, location[1] + 820)
+            self.mouse_instance.touch(location[0] - 55, location[1] + 820)
             time.sleep(1)
         else:
             print("cannot refresh the assist servant!")
