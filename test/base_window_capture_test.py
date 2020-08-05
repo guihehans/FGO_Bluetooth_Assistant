@@ -3,13 +3,13 @@ import os
 import unittest
 import fgo_bluetooth_helper.util.config_6s
 
+
 class MyTestCase(unittest.TestCase):
     def setUp(self):
         print('清空output文件夹')
         files = glob.glob('../output/*')
         for f in files:
             os.remove(f)
-
 
     def tearDown(self):
         print('清空output文件夹')
