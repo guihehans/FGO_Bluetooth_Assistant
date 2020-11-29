@@ -28,7 +28,7 @@ class State:
             found, location = CVModule.match_template('Attack_button')
             retry = retry - 1
         if not found:
-            print("ERROR: can not check if in ready to act status.")
+            print("ERROR: can not check if in ready to act states.")
         return found
 
     @staticmethod
@@ -45,5 +45,22 @@ class State:
             found, location = CVModule.match_template('Attack_button')
             retry = retry - 1
         if not found:
-            print("ERROR: can not check if in ready to act status.")
+            print("ERROR: can not check if in ready to act states.")
+        return found
+
+    @staticmethod
+    def is_ready_to_select_assist_servant():
+        """
+        check if is ready to select assist servant.
+
+        :return: True if ready, False if not.
+        """
+        retry = 10
+        found = False
+        while retry > 0 and not found:
+            time.sleep(1)
+            found, location = CVModule.match_template('drag_bar')
+            retry = retry - 1
+        if not found:
+            print("ERROR: can not check if in ready to select assist servant states.")
         return found

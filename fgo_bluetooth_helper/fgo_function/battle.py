@@ -1,5 +1,6 @@
 import sys
 
+from fgo_bluetooth_helper.fgo_function import State_Check
 from fgo_bluetooth_helper.fgo_function.script import script_register
 from fgo_bluetooth_helper.util import BlueToothMouse, CVModule
 import time
@@ -80,19 +81,22 @@ class BattleHelper(object):
         finish
         :return:
         """
-        for i in range(repeat_times):
+        for i in range(repeat_times, 0, -1):
             if self.mouse_instance.get_is_open():
-                print(
-                    "Enter enter_general_battle_procedure with servant:[{}],servant class:[{}],battle_script:[{}]".format(
-                        self.servant,
-                        self.servant_class,
-                        self.battle_script
-                    ))
+                if State_Check.State.is_ready_to_select_assist_servant():
+                    print(
+                        "Enter enter_general_battle_procedure with servant:[{}],servant class:[{}],battle_script:[{}]".format(
+                            self.servant,
+                            self.servant_class,
+                            self.battle_script
+                        ))
 
-                # select assist servant
-                self.assist_select(self.servant, self.servant_class, self.battle_script)
-                # enter battle and act as setting battle script
-                self.enter_battle(battle_script=self.battle_script)
+                    # select assist servant
+                    self.assist_select(self.servant, self.servant_class, self.battle_script)
+                    # enter battle and act as setting battle script
+                    self.enter_repeat_battle(repeat_times, battle_script=self.battle_script)
+                else:
+                    print("can not be ready to select assist servant!")
             else:
                 print("mouse not open!exit now.")
 
@@ -135,7 +139,7 @@ class BattleHelper(object):
         """
         script_register.load_battle_script(battle_script, self.mouse_instance)
 
-    def enter_repeat_battle(self, repeat_times, battle_script="CBA_3T", ):
+    def enter_repeat_battle(self, repeat_times, battle_script="CBA_3T"):
         """
         battle function
 

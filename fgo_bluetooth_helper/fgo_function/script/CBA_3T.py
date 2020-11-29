@@ -53,4 +53,4 @@ def cba_3t_battle_script(mouse_instance, repeat_times=1):
     cast_master_skill(mouse_instance=mouse_instance, skill_number=1)
     act_and_use_ultimate_skill(mouse_instance=mouse_instance, ultimate_skill=1)
     # quit battle
-    quit_battle(mouse_instance,repeat_times=repeat_times)
+    quit_battle(mouse_instance, repeat_times=repeat_times)

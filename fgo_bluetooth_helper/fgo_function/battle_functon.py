@@ -116,14 +116,35 @@ def quit_battle(mouse_instance, repeat_times=1):
     if battle_finish:
         print("Battle finished.")
         time.sleep(1)
-        retry = 5
-        is_battle_exited = False
-        while (not is_battle_exited) and retry > 0:
+        retry = 20
+        continue_button_found = False
+        while (not continue_button_found) and retry > 0:
             # TODO: repeat situation
-            is_battle_exited, location = CVModule.match_template("LastOrder_sign", show_switch=False)
             mouse_instance.touch(1000, 1100, 2)
+            continue_button_found, location = CVModule.match_template("continue_mission", show_switch=False)
             time.sleep(1)
             retry = retry - 1
 
-        print('Quit success')
+        if repeat_times > 1:
+            # click confirm continue mission button position.
+            mouse_instance.touch(840, 950, 1)
+            time.sleep(0.5)
+            # check if need to eat gold apple
+            confirm_apple_fed, location = CVModule.match_template("Gold_apple", show_switch=False)
+            # if need to use apple:
+            if location != 0:
+                # select gold apple
+                mouse_instance.touch(location[0], location[1] + 200)  # (442,525)
+                time.sleep(0.5)
+                # confirm use apple
+                mouse_instance.touch(840, 950, 2)
+                time.sleep(1)
+                print("Gold apple used.")
+            else:  # else,enough ap to enter battle.
+                pass
+            print("continue battle... waiting for assistant servant selection.")
+        else:
+            # repeat times=1, confirm exit button
+            mouse_instance.touch(340, 950, 1)
+            print('Battle end success. exit...')
         return True
