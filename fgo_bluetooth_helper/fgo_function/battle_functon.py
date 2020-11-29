@@ -102,7 +102,7 @@ def act_and_use_random_cards(mouse_instance):
     print("act and use random cards.")
 
 
-def quit_battle(mouse_instance):
+def quit_battle(mouse_instance, repeat_times=1):
     time.sleep(5)
     battle_finish, still_in_battle = False, False
     while not battle_finish:
@@ -116,9 +116,10 @@ def quit_battle(mouse_instance):
     if battle_finish:
         print("Battle finished.")
         time.sleep(1)
-        retry = 20
+        retry = 5
         is_battle_exited = False
         while (not is_battle_exited) and retry > 0:
+            # TODO: repeat situation
             is_battle_exited, location = CVModule.match_template("LastOrder_sign", show_switch=False)
             mouse_instance.touch(1000, 1100, 2)
             time.sleep(1)

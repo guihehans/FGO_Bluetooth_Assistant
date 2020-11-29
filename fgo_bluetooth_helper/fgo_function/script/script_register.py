@@ -18,7 +18,7 @@ def load_script(script):
             script))
 
 
-def load_battle_script(script, mouse_instance):
+def load_battle_script(script, mouse_instance, repeat_times=1):
     script_dict = {
         "CBA_3T": cba_3t_battle_script,
         "AOE_3T": aoe_3t_battle_script
@@ -26,7 +26,7 @@ def load_battle_script(script, mouse_instance):
     method = script_dict.get(script, "")
     if method:
         print("script:{} loaded,running battle script now!".format(script))
-        method(mouse_instance)
+        method(mouse_instance)(repeat_times)
     else:
         print("script:{} cannot be loaded,please check script name and register it in script.script_register.py".format(
             script))

@@ -58,6 +58,44 @@ class BattleHelper(object):
         else:
             print("mouse not open!exit now.")
 
+    def enter_repeated_battle_procedure(self, repeat_times=3):
+        """
+        enter the repeated battle procedure.
+
+        1. 重复战斗流程 手动选择战斗关卡
+            a. 助战选择界面
+                i. 助战职介
+                ii. 助战选择
+                iii. 开始战斗
+            b. 战斗界面
+                i. 等待loading
+                ii. Turn 1 出招
+                iii. 等待结果
+                iv. Turn 2 出招
+                v. 等待结果
+                vi. Turn 3 出招
+                vii. 等待结果
+                viii. 等待战斗结算 点击继续战斗 回到a
+        战斗重复次数达到
+        finish
+        :return:
+        """
+        for i in range(repeat_times):
+            if self.mouse_instance.get_is_open():
+                print(
+                    "Enter enter_general_battle_procedure with servant:[{}],servant class:[{}],battle_script:[{}]".format(
+                        self.servant,
+                        self.servant_class,
+                        self.battle_script
+                    ))
+
+                # select assist servant
+                self.assist_select(self.servant, self.servant_class, self.battle_script)
+                # enter battle and act as setting battle script
+                self.enter_battle(battle_script=self.battle_script)
+            else:
+                print("mouse not open!exit now.")
+
     def assist_select(self, servant, servant_class, battle_script):
         """
         select the assist servant.
@@ -96,6 +134,16 @@ class BattleHelper(object):
         :return:
         """
         script_register.load_battle_script(battle_script, self.mouse_instance)
+
+    def enter_repeat_battle(self, repeat_times, battle_script="CBA_3T", ):
+        """
+        battle function
+
+        :param battle_script:
+        :param repeat_times:
+        :return:
+        """
+        script_register.load_battle_script(battle_script, self.mouse_instance, repeat_times)
 
     def select_assist_servant_class(self, servant_class: str):
         """
