@@ -1,8 +1,8 @@
 import random
+import time
 
 from fgo_bluetooth_helper.fgo_function.State_Check import State
 from fgo_bluetooth_helper.util import CVModule
-import time
 
 
 def character_skill(mouse_instance, character_number, skill_number, skill_target="None"):  # 角色编号，技能编号，选人（可选）
@@ -126,10 +126,9 @@ def quit_battle(mouse_instance, repeat_times=1):
         retry = 20
         continue_button_found = False
         while (not continue_button_found) and retry > 0:
-            # TODO: repeat situation
             mouse_instance.touch(1000, 1100, 2)
             continue_button_found, location = CVModule.match_template("continue_mission", show_switch=False)
-            time.sleep(1)
+            time.sleep(0.5)
             retry = retry - 1
 
         if repeat_times > 1:
