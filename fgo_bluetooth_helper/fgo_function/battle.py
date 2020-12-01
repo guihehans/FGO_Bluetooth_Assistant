@@ -90,7 +90,7 @@ class BattleHelper(object):
                             self.servant_class,
                             self.battle_script
                         ))
-
+                    print("Current round {}.".format(repeat_times - i))
                     # select assist servant
                     self.assist_select(self.servant, self.servant_class, self.battle_script)
                     # enter battle and act as setting battle script
@@ -125,7 +125,7 @@ class BattleHelper(object):
                 print("servant [{}] found.".format(servant))
                 self.select_team(battle_script=battle_script)
                 time.sleep(0.5)
-                self.start_battle()
+
             elif retry_times >= max_retry:
                 print("cannot find servant {} in given retry_times".format(servant))
                 sys.exit()
@@ -137,6 +137,7 @@ class BattleHelper(object):
         :param battle_script:
         :return:
         """
+        self.start_battle()
         script_register.load_battle_script(battle_script, self.mouse_instance)
 
     def enter_repeat_battle(self, repeat_times, battle_script="CBA_3T"):
@@ -147,6 +148,7 @@ class BattleHelper(object):
         :param repeat_times:
         :return:
         """
+        self.start_battle()
         script_register.load_battle_script(battle_script, self.mouse_instance, repeat_times)
 
     def select_assist_servant_class(self, servant_class: str):

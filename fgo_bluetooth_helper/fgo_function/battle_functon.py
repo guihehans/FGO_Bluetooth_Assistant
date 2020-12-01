@@ -79,6 +79,13 @@ def cast_master_skill(mouse_instance, skill_number, swap_target_1=None, swap_tar
         mouse_instance.touch(110 + (swap_target_2 - 1) * 200, 600)
         # confirm
         mouse_instance.touch(620, 1050)
+    if skill_number == 4:  # 充能
+        mouse_instance.touch(855 + 85 * 1, 525)
+        # select swap_target_1 to fill energy
+        if swap_target_1 != "None":
+            position = (300 + (swap_target_1 - 1) * 300, 700)  # 技能选人
+            time.sleep(0.2)
+            mouse_instance.touch(position[0], position[1])
     time.sleep(1)
     State.is_ready_to_act()
     print('Complete casting Master skill {}.'.format(skill_number))
