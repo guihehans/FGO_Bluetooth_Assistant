@@ -37,12 +37,20 @@ conda create --name <fgo> --file requirement.txt
 此命令将会创建 conda环境 name=fgo,并安装所有需要的package.
 
 - 运行方法为：
-1. 通过 Airplayer 将手机投影到PC 
+1. 运行串口助手,获取usb 串口的名称。例如"com3"
+2. 通过 Airplayer 将手机投影到PC 
 2. 打开 Anaconda Prompt
-```
-cd 项目根目录
+3. 激活安装的conda环境 
+``` 
 conda activate fgo
-python main_function.py
+```
+4. 战斗脚本运行
+```
+python /项目路径/fgo_bluetooth_helper/fgo_function/main_function.py
+```
+5. 抽友情池 搓丸子等功能运行.具体功能用哪个注释掉别的
+```
+python /项目路径/fgo_bluetooth_helper/fgo_function/fgo_function.py
 ```
 - 脚本在/script/下，大家可以参照示例脚本更改做自己的战斗流程。
 基本流程为角色技能,服装技能(充能服 换人等),释放宝具。
