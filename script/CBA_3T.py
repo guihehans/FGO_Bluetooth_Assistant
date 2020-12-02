@@ -39,6 +39,7 @@ def cba_3t_battle_script(mouse_instance, repeat_times=1):
     character_skill(mouse_instance=mouse_instance, character_number=3, skill_number=3, skill_target=1)
     character_skill(mouse_instance=mouse_instance, character_number=2, skill_number=1, skill_target=1)
     character_skill(mouse_instance=mouse_instance, character_number=1, skill_number=3)
+    # 使用换人技能，交换(1,4)号角色
     cast_master_skill(mouse_instance=mouse_instance, skill_number=3, swap_target_1=2, swap_target_2=4)
     character_skill(mouse_instance=mouse_instance, character_number=2, skill_number=1, skill_target=1)
     act_and_use_ultimate_skill(mouse_instance=mouse_instance, ultimate_skill=1)

@@ -26,10 +26,14 @@ def cba_doom_3t_battle_script(mouse_instance, repeat_times=1):
     time.sleep(3)  # 等待6秒，因为礼装效果掉落暴击星会耗时
     # Turn 1
     print("Turn 1")
+    # 1号角色使用技能2
     character_skill(mouse_instance=mouse_instance, character_number=1, skill_number=2)
+    # 2号角色使用技能1,作用目标为角色1
     character_skill(mouse_instance=mouse_instance, character_number=2, skill_number=1, skill_target=1)
     character_skill(mouse_instance=mouse_instance, character_number=3, skill_number=1, skill_target=1)
+    # 充能服充能1号位置
     cast_master_skill(mouse_instance=mouse_instance, skill_number=4, swap_target_1=1, swap_target_2=None)
+    # 1号角色使用宝具
     act_and_use_ultimate_skill(mouse_instance=mouse_instance, ultimate_skill=1)
 
     # 鼠标复位,防止误差累积

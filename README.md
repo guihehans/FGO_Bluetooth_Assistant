@@ -1,6 +1,7 @@
 # FGO_Bluetooth_Helper
 
-这是一个基于python的用于Jenkins CI/CD 流程的运维平台
+这是一个基于蓝牙模块操作手机的FGO 游戏助手。可实现重复战斗，定制3T脚本，友情池抽取，无限池抽取，
+搓丸子等功能。 生活不易，享受游戏。
 
 ## Getting Started
 
@@ -11,6 +12,7 @@
 1. window PC机 测试通过环境为win10.
 2. 安装anaconda 64位windows运行环境.
 3. 为了速度可添加国内源
+4. 机型为非曲面屏机型。 测试机型iPhone 6/6s.版本12以上可支持蓝牙鼠标。
 
 ```
 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
@@ -21,44 +23,47 @@ conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/f
 
 ##### 安装步骤 
 - 项目根目录下有conda 移植环境配置文件
-environment.yml. 执行命令
+requirement.txt. 执行命令
 
 ```
-conda env create -f environment.yml
+conda create --name <fgo> --file requirement.txt
 ```
 
-此命令将会创建 conda环境,并安装所有需要的package.
+此命令将会创建 conda环境 name=fgo,并安装所有需要的package.
 
-项目路径为/leadbank/jenkins_tool
-运行方法为：
+- 运行方法为：
+1. 通过 Airplayer 将手机投影到PC 
+2. 打开 Anaconda Prompt
 ```
-cd /leadbank/jenkins_tool
-/root/anaconda3/envs/jenkins/bin/python app.py [port_num>1024]
+cd 项目根目录
+conda activate fgo
+python main_function.py
 ```
-访问ip:port 可以看见index页面即运行成功。
-日志路径在
+- 脚本在/script/下，大家可以参照示例脚本更改做自己的战斗流程。
+基本流程为角色技能,服装技能(充能服 换人等),释放宝具。
 ```
-/leadbank/jenkins_tool/log4py/jenkins.log
+    # 1号角色使用技能2
+    character_skill(mouse_instance=mouse_instance, character_number=1, skill_number=2)
+    # 2号角色使用技能1,作用目标为角色1
+    character_skill(mouse_instance=mouse_instance, character_number=2, skill_number=1, skill_target=1)
+    character_skill(mouse_instance=mouse_instance, character_number=3, skill_number=1, skill_target=1)
+    # 充能服充能1号位置
+    cast_master_skill(mouse_instance=mouse_instance, skill_number=4, swap_target_1=1, swap_target_2=None)
+    # 使用换人技能，交换(1,4)号角色
+    cast_master_skill(mouse_instance=mouse_instance, skill_number=3, swap_target_1=2, swap_target_2=4)
+    # 1号角色使用宝具 
+    act_and_use_ultimate_skill(mouse_instance=mouse_instance, ultimate_skill=1)
 ```
 
-## Deployment
+## 自己定制？
+通过截取游戏内的标志性图片，你也可以定制自己的功能。
+流程为 
+1. 识别图片-> 
+2. 成功识别代表进入状态—> 
+3. 使用BlueToothMouse 操作鼠标进行操作
 
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Flask](https://flask.palletsprojects.com/en/1.1.x/) - The web framework used
-* [Pandas](https://pandas.pydata.org/) - 数据访问以及处理
-* [Python jenkins](https://python-jenkins.readthedocs.io/en/latest/index.html) - 用来访问jenkins服务接口
-* [Crowd](https://python-crowd.readthedocs.io/en/latest/) - 集成访问现有crowd用户管理系统
-
-## How to use
-此平台方便运维简化build,deploy流程,可分为4个模块:
-
-1. 测试环境-预发环境build
-2. 预发环境-生产环境build
-3. 预发环境deploy
-4. 生产环境deploy
+运行 /util/CVModule.py 在/output 下会有当前屏幕截图。截取自己需要的图标后利用CVModule 调整坐标，
+就可以获取需要点击的坐标了。
 
 
 ## Versioning
@@ -66,9 +71,8 @@ Add additional notes about how to deploy this on a live system
 1.0.0
 ## Authors
 
-* **桂鹤** 
+* **guihehans** 
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Hat tip to anyone who is using the code
+* 感谢 [MacLauren的项目启发](https://github.com/McLaren12345/FGO_Bluetooth_Assistant/)
