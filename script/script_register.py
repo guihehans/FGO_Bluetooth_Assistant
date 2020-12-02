@@ -1,7 +1,7 @@
 # function dict for register
-from fgo_bluetooth_helper.fgo_function.script.CBA_3T import cba_3t_battle_script, cba_3t_load_parameters
-from fgo_bluetooth_helper.fgo_function.script.AOE_3T import aoe_3t_load_parameters, aoe_3t_battle_script
-from fgo_bluetooth_helper.fgo_function.script.CBA_DOOM_3T import cba_doom_3t_load_parameters, cba_doom_3t_battle_script
+from script.AOE_3T import aoe_3t_load_parameters, aoe_3t_battle_script
+from script.CBA_3T import cba_3t_battle_script, cba_3t_load_parameters
+from script.CBA_DOOM_3T import cba_doom_3t_load_parameters, cba_doom_3t_battle_script
 
 
 def load_script(script):

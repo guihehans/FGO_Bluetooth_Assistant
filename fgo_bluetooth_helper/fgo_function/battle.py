@@ -1,9 +1,9 @@
 import sys
+import time
 
 from fgo_bluetooth_helper.fgo_function import State_Check
-from fgo_bluetooth_helper.fgo_function.script import script_register
 from fgo_bluetooth_helper.util import BlueToothMouse, CVModule
-import time
+from script import script_register
 
 
 class BattleHelper(object):
