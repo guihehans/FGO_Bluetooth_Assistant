@@ -50,6 +50,26 @@ def act_and_use_ultimate_skill(mouse_instance, ultimate_skill=1):
     print("act and use ultimate_skill {}".format(ultimate_skill))
 
 
+def act_and_use_ultimate_skill(mouse_instance, ultimate_skill=1, ultimate_skill_other=2):
+    """
+
+    :param ultimate_skill_other:
+    :param mouse_instance:
+    :param ultimate_skill:
+    :return:
+    """
+    mouse_instance.touch(1100, 970, 1)  # 点击attack按钮
+    time.sleep(1.7)
+    mouse_instance.touch(370 + (ultimate_skill - 1) * 230, 250)  # 打手宝具,参数可选1-3号宝具位
+    time.sleep(0.2)
+    mouse_instance.touch(370 + (ultimate_skill_other - 1) * 230, 250)  # 打手宝具,参数可选1-3号宝具位
+    time.sleep(0.1)
+    card_indexes = random.sample(range(0, 4), 2)  # 随机两张牌
+    mouse_instance.touch(115 + (card_indexes[0]) * 250, 800)
+    time.sleep(0.2)
+    print("act and use ultimate_skill {}".format(ultimate_skill))
+
+
 def cast_master_skill(mouse_instance, skill_number, swap_target_1=None, swap_target_2=None):
     """
     use master skill. swap target if the skill_number=3,which is "swap team member"
