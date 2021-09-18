@@ -1,7 +1,9 @@
 import cv2 as cv
 import numpy as np
-import win32gui, win32ui, win32con, win32api
-import sys
+import win32con
+import win32gui
+import win32ui
+
 from fgo_bluetooth_helper.util import config_6s, BlueToothMouse
 
 output_dir = config_6s.output_dir
@@ -97,7 +99,7 @@ def match_template(filename, show_switch=False, threshold=0.85):
 
 
 if __name__ == '__main__':
-    found, location = match_template("Gold_apple", show_switch=False)
+    found, location = match_template("Caber", show_switch=False)
     # found, location=True, (855, 129)
     print(found, location)
     bluemouse = BlueToothMouse.BlueToothMouse(port="com3", config="6sp")

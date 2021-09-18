@@ -8,6 +8,7 @@ from script import script_register
 
 class BattleHelper(object):
     def __init__(self, port, script):
+
         self.mouse_instance = BlueToothMouse.BlueToothMouse(port=port, config="6sp")
         self.mouse_instance.open()
         self.servant = ""
@@ -15,10 +16,11 @@ class BattleHelper(object):
         self.servant_class_location_error = 0, 0
         self.servant_location_error = 0, 0
         self.battle_script = script
-        self.load_script(script)
+        self.script_instance = script_register.load_script(script)
+        self.config_servant_parameters()
 
-    def load_script(self, script):
-        config_data = script_register.load_script(script)
+    def config_servant_parameters(self):
+        config_data = self.script_instance.get_parameters()
         self.servant = config_data.get("servant")
         self.servant_class = config_data.get("servant_class")
         self.servant_class_location_error = config_data.get('servant_class_location_error', (0, 0))
@@ -138,7 +140,7 @@ class BattleHelper(object):
         :return:
         """
         self.start_battle()
-        script_register.load_battle_script(battle_script, self.mouse_instance)
+        self.script_instance.run_battle_script(self.mouse_instance)
 
     def enter_repeat_battle(self, repeat_times, battle_script="CBA_3T"):
         """
@@ -149,7 +151,7 @@ class BattleHelper(object):
         :return:
         """
         self.start_battle()
-        script_register.load_battle_script(battle_script, self.mouse_instance, repeat_times)
+        self.script_instance.run_battle_script(self.mouse_instance, repeat_times)
 
     def select_assist_servant_class(self, servant_class: str):
         """

@@ -13,11 +13,11 @@ SERVANT_CONFIG_DATA = {
 }
 
 
-def cba_lancelot_3t_load_parameters():
+def get_parameters():
     return SERVANT_CONFIG_DATA
 
 
-def cba_lancelot_3t_battle_script(mouse_instance, repeat_times=1):
+def run_battle_script(mouse_instance, repeat_times=1):
     # 鼠标复位,防止误差累积
     mouse_instance.set_zero()
     # 等待战斗开始

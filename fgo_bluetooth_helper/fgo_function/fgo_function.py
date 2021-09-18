@@ -1,5 +1,6 @@
-from fgo_bluetooth_helper.util import BlueToothMouse
 import time
+
+from fgo_bluetooth_helper.util import BlueToothMouse
 from fgo_bluetooth_helper.util import config_6s
 from fgo_bluetooth_helper.util.CVModule import match_template
 from fgo_bluetooth_helper.util.config_6s import first_spot_location, COL_NUMBER, ROW_NUMBER, bottom_right_location, \
@@ -87,6 +88,6 @@ def draw_lottery(com):
 
 
 if __name__ == '__main__':
-    # friendship_point_summon("com3")
+    friendship_point_summon("com3")
     # make_experience_card("com3")
-    draw_lottery("com3")
+    # draw_lottery("com3")

@@ -1,21 +1,20 @@
 # function dict for register
-from script.AOE_3T import aoe_3t_load_parameters, aoe_3t_battle_script
-from script.CBA_3T import cba_3t_battle_script, cba_3t_load_parameters
-from script.CBA_DOOM_3T import cba_doom_3t_load_parameters, cba_doom_3t_battle_script
-from script.CBA_Lancelot_3T import cba_lancelot_3t_battle_script, cba_lancelot_3t_load_parameters
+from script.AOE_3T import AOE_3T
+from script.BaseScript import BaseScript
+from script.NOMERCY_3T import NOMERCY_3T
+from script.WUZANG import WUZANG
 
 
-def load_script(script):
+def load_script(script) -> BaseScript:
     script_dict = {
-        "CBA_3T": cba_3t_load_parameters,
-        "AOE_3T": aoe_3t_load_parameters,
-        "CBA_LANCELOT_3T": cba_lancelot_3t_load_parameters,
-        "CBA_DOOM_3T": cba_doom_3t_load_parameters
+        'AOE_3T': AOE_3T,
+        'NOMERCY_3T': NOMERCY_3T,
+        'WUZANG': WUZANG
     }
-    method = script_dict.get(script, "")
-    if method:
+    script_instance = script_dict.get(script)
+    if script_instance:
         print("script config:{} loaded,loading parameters now!".format(script))
-        result = method()
+        result = script_instance()
         return result
     else:
         print(
@@ -23,17 +22,5 @@ def load_script(script):
                 script))
 
 
-def load_battle_script(script, mouse_instance, repeat_times=1):
-    script_dict = {
-        "CBA_3T": cba_3t_battle_script,
-        "AOE_3T": aoe_3t_battle_script,
-        "CBA_LANCELOT_3T": cba_lancelot_3t_battle_script,
-        "CBA_DOOM_3T": cba_doom_3t_battle_script
-    }
-    battle_func = script_dict.get(script, "")
-    if battle_func:
-        print("script:{} loaded,running battle script now!".format(script))
-        battle_func(mouse_instance, repeat_times)
-    else:
-        print("script:{} cannot be loaded,please check script name and register it in script.script_register.py".format(
-            script))
+if __name__ == '__main__':
+    load_script("WUZANG")

@@ -50,10 +50,11 @@ def act_and_use_ultimate_skill(mouse_instance, ultimate_skill=1):
     print("act and use ultimate_skill {}".format(ultimate_skill))
 
 
-def cast_master_skill(mouse_instance, skill_number, swap_target_1=None, swap_target_2=None):
+def cast_master_skill(mouse_instance, skill_number, swap_target_1=None, swap_target_2=None, othersuite=False):
     """
     use master skill. swap target if the skill_number=3,which is "swap team member"
 
+    :param othersuite:
     :param mouse_instance:
     :param skill_number:
     :param swap_target_1:
@@ -79,8 +80,9 @@ def cast_master_skill(mouse_instance, skill_number, swap_target_1=None, swap_tar
         mouse_instance.touch(110 + (swap_target_2 - 1) * 200, 600)
         # confirm
         mouse_instance.touch(620, 1050)
-    if skill_number == 4:  # 充能
-        mouse_instance.touch(855 + 85 * 1, 525)
+    if skill_number == 4 or othersuite == True:  # 充能 泳装
+        pos = 1 if othersuite == False else 2
+        mouse_instance.touch(855 + 85 * pos, 525)
         # select swap_target_1 to fill energy
         if swap_target_1 != "None":
             position = (300 + (swap_target_1 - 1) * 300, 700)  # 技能选人
