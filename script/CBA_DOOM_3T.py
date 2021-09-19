@@ -32,7 +32,7 @@ def run_battle_script(mouse_instance, repeat_times=1):
     character_skill(mouse_instance=mouse_instance, character_number=2, skill_number=1, skill_target=1)
     character_skill(mouse_instance=mouse_instance, character_number=3, skill_number=1, skill_target=1)
     # 充能服充能1号位置
-    cast_master_skill(mouse_instance=mouse_instance, skill_number=4, swap_target_1=1, swap_target_2=None)
+    cast_master_skill(mouse_instance=mouse_instance, skill_number=4, target_1=1, targe_2=None)
     # 1号角色使用宝具
     act_and_use_ultimate_skill(mouse_instance=mouse_instance, ultimate_skill=1)
 

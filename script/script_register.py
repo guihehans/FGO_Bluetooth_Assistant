@@ -8,7 +8,7 @@ from script.WUZANG import WUZANG
 def load_script(script) -> BaseScript:
     script_dict = {
         'AOE_3T': AOE_3T,
-        'NOMERCY_3T': NOMERCY_3T,
+        'NOMERCY': NOMERCY_3T,
         'WUZANG': WUZANG
     }
     script_instance = script_dict.get(script)

@@ -24,7 +24,7 @@ class NOMERCY_3T(BaseScript):
         # 等待战斗开始
         # 判断是否进入战斗界面
         State.is_ready_to_act()
-        time.sleep(3)  # 等待6秒，因为礼装效果掉落暴击星会耗时
+        time.sleep(2)  # 等待6秒，因为礼装效果掉落暴击星会耗时
         # Turn 1
         print("Turn 1")
         # caber in pos 2, cast skill 1,2,3 to pos 3
@@ -32,11 +32,12 @@ class NOMERCY_3T(BaseScript):
         character_skill(mouse_instance=mouse_instance, character_number=2, skill_number=2, skill_target=3)
         character_skill(mouse_instance=mouse_instance, character_number=2, skill_number=3, skill_target=3)
 
-        cast_master_skill(mouse_instance=mouse_instance, skill_number=3, swap_target_1=2, swap_target_2=5)
+        cast_master_skill(mouse_instance=mouse_instance, skill_number=3, target_1=2, targe_2=5)
         # caber 2 in pos 2, cast skill 1,2,3 to pos 3 again
         character_skill(mouse_instance=mouse_instance, character_number=2, skill_number=1)
         character_skill(mouse_instance=mouse_instance, character_number=2, skill_number=2, skill_target=3)
         character_skill(mouse_instance=mouse_instance, character_number=2, skill_number=3, skill_target=3)
+
         act_and_use_ultimate_skill(mouse_instance=mouse_instance, ultimate_skill=3)
 
         # 鼠标复位,防止误差累积
@@ -59,6 +60,7 @@ class NOMERCY_3T(BaseScript):
         character_skill(mouse_instance=mouse_instance, character_number=1, skill_number=1, skill_target=3)
         # 换人服加攻
         cast_master_skill(mouse_instance=mouse_instance, skill_number=1)
+        time.sleep(1)
         act_and_use_ultimate_skill(mouse_instance=mouse_instance, ultimate_skill=3)
         # quit battle
         quit_battle(mouse_instance, repeat_times=repeat_times)

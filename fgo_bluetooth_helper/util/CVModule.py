@@ -9,13 +9,13 @@ from fgo_bluetooth_helper.util import config_6s, BlueToothMouse
 output_dir = config_6s.output_dir
 
 
-def window_capture():
+def window_capture(window_handler="CHWindow", caption=None):
     """
     capture the window image from iphone sent through Airplayer.
 
     :return:
     """
-    hwnd = win32gui.FindWindow("CHWindow", None)  # get window handler. the window Handler name is CHWindow
+    hwnd = win32gui.FindWindow(window_handler, caption)  # get window handler. the window Handler name is CHWindow
     # 根据窗口句柄获取窗口的设备上下文DC（Device Context）
     hwndDC = win32gui.GetWindowDC(hwnd)
     # 获取句柄窗口的大小信息
@@ -66,7 +66,7 @@ def match_template(filename, show_switch=False, threshold=0.85):
     """
     template_dir = config_6s.template_dir + filename + '.jpg'
     # get the screen captured image
-    img = window_capture()
+    img = window_capture(config_6s.air_handler.get("handler_name"), config_6s.worm_handler.get("caption"))
     # read template
     template_img = cv.imread(template_dir)
     result = cv.matchTemplate(img, template_img, cv.TM_CCOEFF_NORMED)
@@ -106,7 +106,7 @@ if __name__ == '__main__':
     bluemouse.open()
     bluemouse.set_zero()
     if location != 0:
-        bluemouse.move(location[0], location[1]+200)  # apple 200 confirm 390
+        bluemouse.move(location[0], location[1] + 200)  # apple 200 confirm 390
         # bluemouse.touch(location[0] - 60, location[1] + 100)
         # drag for 1 screen long
         # bluemouse.drag(location[0] - 60, location[1] + 260)

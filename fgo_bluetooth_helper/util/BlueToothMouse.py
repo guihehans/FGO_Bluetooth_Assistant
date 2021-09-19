@@ -83,7 +83,7 @@ class BlueToothMouse:
         """
         self.serial.write(serial.to_bytes([0x08, 0x00, 0xA1, 0x02, 1, 0, 0, 0]))
         self.serial.write(serial.to_bytes([0x08, 0x00, 0xA1, 0x02, 0, 0, 0, 0]))
-        time.sleep(0.3)
+        time.sleep(0.05)
 
     def move(self, x, y, key=0):
         dx = x - self.x_pre
@@ -142,9 +142,10 @@ class BlueToothMouse:
 
     def touch(self, x, y, times=1):
         if self.serial.isOpen():
+            self.move(x, y)
             for i in range(times):
-                self.move(x, y)
                 self.click()
+            time.sleep(0.3)
         else:
             print("发送失败，串口未打开")
 

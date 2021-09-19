@@ -38,8 +38,8 @@ def act_and_use_ultimate_skill(mouse_instance, ultimate_skill=1):
     :param ultimate_skill:
     :return:
     """
-    mouse_instance.touch(1100, 970, 1)  # 点击attack按钮
-    time.sleep(1.7)
+    mouse_instance.touch(1100, 970, 2)  # 点击attack按钮
+    time.sleep(1)
     mouse_instance.touch(370 + (ultimate_skill - 1) * 230, 250)  # 打手宝具,参数可选1-3号宝具位
     time.sleep(0.2)
     card_indexes = random.sample(range(0, 4), 2)  # 随机两张牌
@@ -50,45 +50,44 @@ def act_and_use_ultimate_skill(mouse_instance, ultimate_skill=1):
     print("act and use ultimate_skill {}".format(ultimate_skill))
 
 
-def cast_master_skill(mouse_instance, skill_number, swap_target_1=None, swap_target_2=None, othersuite=False):
+def cast_master_skill(mouse_instance, skill_number, target_1=None, targe_2=None):
     """
     use master skill. swap target if the skill_number=3,which is "swap team member"
 
-    :param othersuite:
     :param mouse_instance:
     :param skill_number:
-    :param swap_target_1:
-    :param swap_target_2:
+    :param target_1:
+    :param targe_2:
     :return:
     """
     # 御主技能按键
     print('Ready to cast Master skill {}.'.format(skill_number))
     mouse_instance.touch(1130, 525, 1)
-    time.sleep(1)
-    if skill_number == 1:
-        mouse_instance.touch(855, 525)
-    if skill_number == 2:
-        mouse_instance.touch(855 + 85 * (skill_number - 1), 525)
-    if skill_number == 3:  # 换人
-        mouse_instance.touch(855 + 85 * (skill_number - 1), 525)
+    time.sleep(0.3)
+    # 衣服技能 主选项 位置为 1,2,3
+    mouse_instance.touch(855 + 85 * (skill_number - 1), 525)
+    # 衣服技能 次选项组合
+    # tartget_1 tartge_2 换人
+    if target_1 and targe_2:
         # select swap_target_1
         mouse_instance.set_zero()
-        mouse_instance.touch(110 + (swap_target_1 - 1) * 200, 600)
+        mouse_instance.touch(110 + (target_1 - 1) * 200, 600)
         time.sleep(0.5)
         # select swap_target_2
         mouse_instance.set_zero()
-        mouse_instance.touch(110 + (swap_target_2 - 1) * 200, 600)
+        mouse_instance.touch(110 + (targe_2 - 1) * 200, 600)
         # confirm
         mouse_instance.touch(620, 1050)
-    if skill_number == 4 or othersuite == True:  # 充能 泳装
-        pos = 1 if othersuite == False else 2
-        mouse_instance.touch(855 + 85 * pos, 525)
-        # select swap_target_1 to fill energy
-        if swap_target_1 != "None":
-            position = (300 + (swap_target_1 - 1) * 300, 700)  # 技能选人
+        time.sleep(1.5)
+
+    elif target_1:  # 指向性技能
+        # select target_1 to fill energy
+        if target_1 != "None":
+            position = (300 + (target_1 - 1) * 300, 700)  # 技能选人
             time.sleep(0.2)
             mouse_instance.touch(position[0], position[1])
-    time.sleep(1)
+            time.sleep(0.5)
+
     State.is_ready_to_act()
     print('Complete casting Master skill {}.'.format(skill_number))
     time.sleep(0.5)

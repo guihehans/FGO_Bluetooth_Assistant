@@ -27,14 +27,21 @@ COL_NUMBER = 3
 ROW_NUMBER = 7
 
 # initial card x cord
-initial_card_x=130
-initial_card_y=420
-x_move_step=126
-y_move_step=240
-
+initial_card_x = 130
+initial_card_y = 420
+x_move_step = 126
+y_move_step = 240
 
 # bottom right button location
 bottom_right_location = 1100, 1130
 
 # pop up confirm button location
-pop_up_confirm_button_location=800, 1000
+pop_up_confirm_button_location = 800, 1000
+
+# window handler name
+air_handler = {"handler_name": "CHWindow", "caption": None}
+worm_handler = {"handler_name": "Qt5QWindowIcon", "caption": "Wormhole(iPhone (6))"}
+
+config = {"iPhone6": {"name": "Wormhole(iPhone)", "length": 1122, "bias": 0},
+          "iPhone12": {"name": "Wormhole(Paul)", "length": 1357, "bias": 117},
+          "iPadmini4": {"name": "Wormhole(iPad (2))", "length": 1358, "bias": 117}}

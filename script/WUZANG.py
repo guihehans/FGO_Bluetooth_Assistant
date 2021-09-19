@@ -37,6 +37,7 @@ class WUZANG(BaseScript):
         character_skill(mouse_instance=mouse_instance, character_number=3, skill_number=3, skill_target=1)
         # 武藏2技能
         character_skill(mouse_instance=mouse_instance, character_number=1, skill_number=2)
+
         act_and_use_ultimate_skill(mouse_instance=mouse_instance, ultimate_skill=1)
 
         # 鼠标复位,防止误差累积
@@ -51,12 +52,11 @@ class WUZANG(BaseScript):
         State.is_ready_to_act()
         # Turn3
         print("Turn 3")
-        # 泳装加buff 充能 3号武藏
-        # cast_master_skill(mouse_instance=mouse_instance, skill_number=1, swap_target_1=1)
-        cast_master_skill(mouse_instance=mouse_instance, skill_number=4, swap_target_1=1, swap_target_2=5,
-                          othersuite=True)
         # 武藏3技能
         character_skill(mouse_instance=mouse_instance, character_number=1, skill_number=3)
+        # 泳装加buff 充能 3号武藏
+        cast_master_skill(mouse_instance=mouse_instance, skill_number=1, target_1=1)
+        cast_master_skill(mouse_instance=mouse_instance, skill_number=3, target_1=1)
         act_and_use_ultimate_skill(mouse_instance=mouse_instance, ultimate_skill=1)
         # quit battle
         quit_battle(mouse_instance, repeat_times=repeat_times)

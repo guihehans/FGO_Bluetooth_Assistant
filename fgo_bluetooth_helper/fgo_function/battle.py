@@ -7,9 +7,9 @@ from script import script_register
 
 
 class BattleHelper(object):
-    def __init__(self, port, script):
+    def __init__(self, port, script, config="6sp"):
 
-        self.mouse_instance = BlueToothMouse.BlueToothMouse(port=port, config="6sp")
+        self.mouse_instance = BlueToothMouse.BlueToothMouse(port=port, config=config)
         self.mouse_instance.open()
         self.servant = ""
         self.servant_class = ""
@@ -255,6 +255,7 @@ class BattleHelper(object):
             print("enter battle now.")
             self.mouse_instance.set_zero()
             self.mouse_instance.touch(location[0] - 50, location[1] + 450)
+            time.sleep(0.3)
         else:
             print("cannot find Start_button, please check template!")
             print("exit battle.")
